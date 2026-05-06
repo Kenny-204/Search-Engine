@@ -1,6 +1,7 @@
 package com.searchengine;
 
 
+import com.searchengine.Indexing.Indexer;
 import com.searchengine.documentprocessing.DocumentProcessor;
 import com.searchengine.documentprocessing.services.Normalizer;
 import com.searchengine.documentprocessing.services.Tokenizer;
@@ -94,12 +95,18 @@ public class Main {
         var normalizer = new Normalizer();
         var tokenizer = new Tokenizer();
         var processor = new DocumentProcessor(normalizer,tokenizer);
+        var indexer = new Indexer();
 
         InputStream stream =  new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
         var result = processor.process(stream,"file.txt");
+        var invertedIndex = indexer.Index(result,"file.txt");
 
-        for (var token : result) {
-            System.out.println(token.token + " - " + token.position);
+        for (var entry : invertedIndex.entrySet()) {
+            System.out.println("Word: " + entry.getKey());
+            for (var docEntry : entry.getValue().entrySet()) {
+                System.out.println("  Doc: " + docEntry.getKey() + " Positions: " + docEntry.getValue());
+            }
         }
+
     }
 }
