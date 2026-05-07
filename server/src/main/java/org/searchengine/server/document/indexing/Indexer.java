@@ -1,17 +1,19 @@
-package com.searchengine.Indexing;
+package org.searchengine.server.document.indexing;
 
-import com.searchengine.documentprocessing.services.Tokenizer;
+import org.searchengine.server.document.documentProcessing.Tokenizer;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class Indexer {
 
-    private final Map<String, Map<String, List<Integer>>> _index = new HashMap<>();
+    private static final Map<String, Map<String, List<Integer>>> _index = new HashMap<>();
 
-    public Map<String, Map<String, List<Integer>>> Index(List<Tokenizer.Token> tokens, String fileName) {
+    public static Map<String, Map<String, List<Integer>>> Index(List<Tokenizer.Token> tokens, String fileName) {
 
         tokens.forEach(token -> {
             if (_index.containsKey(token.token)) {
@@ -22,7 +24,7 @@ public class Indexer {
                 }
             } else {
                 Map<String, List<Integer>> fileMap = new HashMap<>();
-                List<Integer> positions = new ArrayList();
+                List<Integer> positions = new ArrayList<>();
                 positions.add(token.position);
                 fileMap.put(fileName, positions);
                 _index.put(token.token, fileMap);
