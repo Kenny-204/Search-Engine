@@ -1,7 +1,6 @@
 package org.searchengine.server.document.indexing;
 
 import org.searchengine.server.document.documentProcessing.Tokenizer;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
